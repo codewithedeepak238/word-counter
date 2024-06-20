@@ -1,60 +1,43 @@
-import { createContext, useContext, useReducer } from "react"
-import { InfoReducer } from "../reducers/InfoReducer";
+import { createContext, useContext, useState } from "react"
 
 const initialInfo = {
-    first_name:'',
-    last_name:'',
-    email:'',
-    phone:'',
-    address:'',
-    dob:'',
-    fresher:'',
-    parent_name:'',
-    parent_phone:'',
-    parent_email:'',
-    high_degree:'',
-    high_degree_cls:'',
-    high_degree_branch:'',
-    high_degree_college:'',
-    high_degree_percent:'',
-    high_degree_year:'',
-    plus_two_percent:'',
-    high_school_perecent:'',
-    current_employer:'',
-    job_title:'',
-    ctc:'',
-    experience:'',
-    linkedin:'',
-    github:'',
-    hacker_rank:''
+    budget: 2000,
+    remain: 2000,
+    spent: 0,
+    tasks: []
 }
 
 const InfoContext = createContext(initialInfo);
 
-export const InfoProvider = ({children})=>{
-
-    const [state, dispatch] = useReducer(InfoReducer, initialInfo)
-
-    function basicDetail(detail){
-        const updatedInfo = {...state, detail};
-        dispatch({
-            type:'BASIC_DETAIL',
-            payload:{
-                detail: detail
-            }
-        })
+export const InfoProvider = ({ children }) => {
+    const [tasks, setTask] = useState([]);
+    let remain = 2000;
+    let spent = 0;
+    function addTask(task){
+        remain = remain - task.price;
+        spent = spent + task.price;
+        setTask((prev)=>[...prev, task]);
+    }
+    function removeTask(task){
+        remain = remain + task.price;
+        spent = spent - task.price;
+        const newTasks = tasks.filter((item)=>item.id!==task.id);
+        setTask([...newTasks]);
+    }
+    const value = {
+        budget: 2000,
+        remain: remain,
+        spent: spent,
+        taskList: tasks,
+        addTask,
+        removeTask
     }
 
-    const value={
-        dispatch,
-        initialInfo,
-    }
-
-    return(
+    return (
         <InfoContext.Provider value={value}>
             {children}
         </InfoContext.Provider>
     )
 }
 
-export const useInfo = ()=>useContext(InfoContext)
+export const useInfo = () => useContext(InfoContext)

@@ -11,10 +11,3 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-main{
-  max-width: 1280px;
-  display: block;
-  margin: auto;
-  min-height: 100vh;
-  padding: 5% 2%;
-}
