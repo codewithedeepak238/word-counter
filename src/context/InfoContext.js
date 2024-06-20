@@ -1,26 +1,19 @@
 import { createContext, useContext, useState } from "react"
 
-const initialInfo = {
-    budget: 2000,
-    remain: 2000,
-    spent: 0,
-    tasks: []
-}
-
-const InfoContext = createContext(initialInfo);
+const InfoContext = createContext();
 
 export const InfoProvider = ({ children }) => {
     const [tasks, setTask] = useState([]);
-    let remain = 2000;
-    let spent = 0;
+    let [remain, setRemain] = useState(2000);
+    let [spent, setSpent] = useState(0);
     function addTask(task){
-        remain = remain - task.price;
-        spent = spent + task.price;
+        setRemain((prev)=>prev-task.price);
+        setSpent((prev)=>prev+task.price);
         setTask((prev)=>[...prev, task]);
     }
     function removeTask(task){
-        remain = remain + task.price;
-        spent = spent - task.price;
+        setRemain((prev)=>prev+task.price);
+        setSpent((prev)=>prev-task.price);
         const newTasks = tasks.filter((item)=>item.id!==task.id);
         setTask([...newTasks]);
     }
@@ -29,6 +22,8 @@ export const InfoProvider = ({ children }) => {
         remain: remain,
         spent: spent,
         taskList: tasks,
+        setRemain,
+        setSpent,
         addTask,
         removeTask
     }
