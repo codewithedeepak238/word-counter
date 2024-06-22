@@ -1,49 +1,31 @@
-import { useInfo } from "../context/InfoContext"
+import { useEffect, useState } from "react"
 
 export const Hero = () => {
-    const { taskList, addTask, removeTask } = useInfo();
-    function handleSubmit(e) {
-        e.preventDefault();
-        const task = {
-            id: Math.random()*10*Math.random(),
-            taskName: e.target.name.value,
-            price: Number(e.target.cost.value)
-        }
-        e.target.name.value = "";
-        e.target.cost.value = "";
-        addTask(task);
-    }
+    const [text, setText] = useState("");
+    let words = 0;
+    let char = 0;
+    useEffect(()=>{
+        
+    }, [text])
     return (
-        <div>
-            <h2 className='text-2xl font-[500] mt-[2%]'>Expenses</h2>
-            <div className='mt-[1%]'>
-                {
-                    taskList && taskList.map((task) => (
-                        <div key={task.id} className='mb-[1%] flex justify-between border-[1px] border-gray-200 bg-gray-100 rounded-[5px] p-[1%]'>
-                            <p>{task.taskName}</p>
-                            <div className='flex'>
-                                <p className='mr-[10px]'>Rs. {task.price}</p>
-                                <button onClick={()=>removeTask(task)} className='bg-blue-200 px-[5px]'>Remove</button>
-                            </div>
-                        </div>
-                    ))
-                }
-            </div>
-            <h2 className='text-4xl font-[500] mt-[2%]'>Add Expenses</h2>
-            <div className='mt-[2%]'>
-                <form onSubmit={handleSubmit}>
-                    <div className='flex justify-between'>
-                        <div className='flex flex-col w-[45%]'>
-                            <label htmlFor="name">Name</label>
-                            <input className='p-[1%] mt-[5px] border-[1px] border-gray-300 rounded-[5px]' type="text" name='name' id='name' required />
-                        </div>
-                        <div className='flex flex-col w-[45%]'>
-                            <label htmlFor="cost">Cost</label>
-                            <input className='p-[1%] mt-[5px] border-[1px] border-gray-300 rounded-[5px]' type="number" name='cost' id='cost' required />
-                        </div>
-                    </div>
-                    <button className='bg-blue-700 text-white py-[0.5%] px-[1%] rounded-[5px] mt-[2%]' type='submit'>Save</button>
-                </form>
+        <div className="flex items-center justify-center">
+            <div className="mt-[8%]">
+                <h2 className="text-4xl font-[500]">TextUtis - Word Counter, Charecter Counter, Remove Extra Space</h2>
+                <p className="text-2xl font-[500] mt-[3%]">Enter Your Text Here:</p>
+                <textarea onInput={(e)=>setText(e.target.value)} name="inputext" id="inputext" className="w-[100%] rounded-[5px] mt-[2%] p-[1%]"></textarea>
+                <div className="mt-[2%]">
+                    <button className="mr-[1%] bg-blue-400 p-[7px] text-l rounded-[4px] text-white">Convert Uppercase</button>
+                    <button className="mr-[1%] bg-blue-400 p-[7px] text-l rounded-[4px] text-white">Convert Lowercase</button>
+                    <button className="mr-[1%] bg-red-400 p-[7px] text-l rounded-[4px] text-white">Clear Text</button>
+                    <button className="mr-[1%] bg-green-700 p-[7px] text-l rounded-[4px] text-white">Copy To Clipboard</button>
+                    <button className="mr-[1%] bg-blue-400 p-[7px] text-l rounded-[4px] text-white">Remove Extra Spaces</button>
+                </div>
+                <div className="mt-[5%]">
+                    <p className="text-4xl font-[500]">Summary Of Your Text</p>
+                    <p className="mt-[10px]">Number of words:</p>
+                    <p className="mt-[5px]">Number of characters:</p>
+                    <p className="mt-[5px]">Reading Time:</p>
+                </div>
             </div>
         </div>
     )

@@ -3,7 +3,7 @@ import { Hero } from "./components/Hero";
 
 function App() {
   return (
-    <div className="App px-[8%]">
+    <div className="App px-[3%]">
       <Header/>
       <Hero/>
     </div>
