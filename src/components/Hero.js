@@ -4,7 +4,7 @@ export const Hero = () => {
     const [text, setText] = useState("");
     let [char, setChar] = useState(0);
     let [words, setWords] = useState(0);
-    let [display, setDisplay] = useState("");
+
     function charCount(){
         let newArr = text.split(" ");
         let enter = text.split("\n");
@@ -51,6 +51,20 @@ export const Hero = () => {
     }
     function clearText(){
         document.getElementById("inputext").value = "";
+        setChar(0);
+        setWords(0);
+    }
+    function copyText(){
+        const copyText = document.getElementById("inputext");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); //for mobile devices
+        navigator.clipboard.writeText(copyText.value);
+        alert("Text copied to clipboard");
+    }
+    function removeSpaces(){
+        const newArr = text.split(" ").filter((ele)=>ele!=="");
+        const newStr = newArr.join(" ");
+        document.getElementById("inputext").value = newStr;
     }
 
     return (
@@ -63,8 +77,8 @@ export const Hero = () => {
                     <button onClick={upperCase} className="mr-[1%] bg-blue-400 p-[7px] text-l rounded-[4px] text-white">Convert Uppercase</button>
                     <button onClick={lowerCase} className="mr-[1%] bg-blue-400 p-[7px] text-l rounded-[4px] text-white">Convert Lowercase</button>
                     <button onClick={clearText} className="mr-[1%] bg-red-400 p-[7px] text-l rounded-[4px] text-white">Clear Text</button>
-                    <button className="mr-[1%] bg-green-700 p-[7px] text-l rounded-[4px] text-white">Copy To Clipboard</button>
-                    <button className="mr-[1%] bg-blue-400 p-[7px] text-l rounded-[4px] text-white">Remove Extra Spaces</button>
+                    <button onClick={copyText} className="mr-[1%] bg-green-700 p-[7px] text-l rounded-[4px] text-white">Copy To Clipboard</button>
+                    <button onClick={removeSpaces} className="mr-[1%] bg-blue-400 p-[7px] text-l rounded-[4px] text-white">Remove Extra Spaces</button>
                 </div>
                 <div className="mt-[5%]">
                     <p className="text-4xl font-[500]">Summary Of Your Text</p>
